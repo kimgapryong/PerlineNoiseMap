@@ -12,4 +12,13 @@ public static class Define
         Tree,
         Leaf
     }
+    public enum State
+    {
+        Walk,
+        Run,
+        Dig,
+        Idle,
+        Attack,
+        Jump
+    }
 }

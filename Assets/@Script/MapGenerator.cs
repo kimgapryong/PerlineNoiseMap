@@ -52,7 +52,9 @@ public class MapGenerator : MonoBehaviour
             {
                 Vector3Int dicVec = new Vector3Int(x, 0, y);
                 GameObject obj = Manager.Resources.Instantiate("Water", (Vector3)dicVec * objTrans, Quaternion.identity);
-                _tileDic.Add(dicVec, new Tile(Define.TileType.Water, 0, 100, obj));
+                Debug.Log(obj);
+                Tile tile = obj.AddComponent<Tile>().GetSetTile(Define.TileType.Water, 0, 100, obj);
+                _tileDic.Add(dicVec, tile);
             }
         }
 
@@ -65,13 +67,15 @@ public class MapGenerator : MonoBehaviour
                         {
                             Vector3Int dicVec = new Vector3Int(x, value, y);
                             GameObject obj = Manager.Resources.Instantiate("Rock", (Vector3)dicVec * objTrans, Quaternion.identity);
-                            if (_tileDic.TryGetValue(dicVec, out Tile tile))
+                            Tile tile = obj.AddComponent<Tile>().GetSetTile(Define.TileType.Rock, value, 100, obj);
+                            if (_tileDic.TryGetValue(dicVec, out Tile curtile))
                             {
-                                Destroy(tile.obj);
-                                _tileDic[dicVec] = new Tile(Define.TileType.Rock, value, 100, obj);
+                                Destroy(curtile.obj);
+
+                                _tileDic[dicVec] = tile;
                                 continue;
                             }
-                            _tileDic.Add(dicVec, new Tile(Define.TileType.Rock, value, 100, obj));
+                            _tileDic.Add(dicVec, tile);
                         }
                         break;
                     }
@@ -107,9 +111,9 @@ public class MapGenerator : MonoBehaviour
 
 
                             GameObject obj = Manager.Resources.Instantiate("Iland", (Vector3)vec * objTrans, Quaternion.identity);
-                            _tileDic.Add(vec, new Tile(Define.TileType.Ground, i, 100, obj));
+                            Tile tile = obj.AddComponent<Tile>().GetSetTile(Define.TileType.Ground, i, 100, obj);
+                            _tileDic.Add(vec, tile);
 
-                           
                         }
                     }
                 }
@@ -169,11 +173,12 @@ public class MapGenerator : MonoBehaviour
             curVec += Vector3Int.up;
             
             GameObject obj = Manager.Resources.Instantiate("Tree", (Vector3)curVec * objTrans, Quaternion.identity);
-
-            if(_tileDic.ContainsKey(curVec))
+            Tile tile = obj.AddComponent<Tile>().GetSetTile(Define.TileType.Tree, i, 100, obj);
+            if (_tileDic.ContainsKey(curVec))
                 continue;
 
-            _tileDic.Add(curVec, new Tile(Define.TileType.Tree, i, 100, obj));
+            
+            _tileDic.Add(curVec, tile);
 
             if(i > 4)
             {
@@ -182,10 +187,10 @@ public class MapGenerator : MonoBehaviour
                     Vector3Int leafVec = curVec + leafArray[k];
                     Debug.Log(leafVec);
                     GameObject leaf = Manager.Resources.Instantiate("Leaf", (Vector3)leafVec * objTrans, Quaternion.identity);
-
+                    Tile leafTile = leaf.AddComponent<Tile>().GetSetTile(Define.TileType.Leaf, i, 100, obj);
                     if (_tileDic.ContainsKey(leafVec))
                         continue;
-                    _tileDic.Add(leafVec, new Tile(Define.TileType.Leaf, i, 100, obj));
+                    _tileDic.Add(leafVec, leafTile);
                 }
             }
         }
@@ -224,7 +229,7 @@ public class MapGenerator : MonoBehaviour
 }
 
 
-public class Tile
+public class Tile : MonoBehaviour
 {
     public bool dieTile;
 
@@ -233,12 +238,14 @@ public class Tile
     public float point;
     public float hp;
 
-    public Tile(Define.TileType type, float point, float hp, GameObject obj)
+    public Tile GetSetTile(Define.TileType type, float point, float hp, GameObject obj)
     {
         tileType = type;
         this.point = point;
         this.hp = hp;
         this.obj = obj;
+
+        return this;    
     }
     public void SetDie()
     {
