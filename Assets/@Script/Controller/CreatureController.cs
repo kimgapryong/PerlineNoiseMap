@@ -107,7 +107,7 @@ public class CreatureController : BaseController
     private IEnumerator Wait(float time, Action onComplete)
     {
         yield return new WaitForSeconds(time);
-        _coroutine = null;
+        _coroutine = null;  
         onComplete?.Invoke();
     }
 }
