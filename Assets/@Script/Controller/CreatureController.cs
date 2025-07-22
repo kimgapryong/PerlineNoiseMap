@@ -73,7 +73,7 @@ public class CreatureController : BaseController
         }
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         UpdateMethod();
     }
