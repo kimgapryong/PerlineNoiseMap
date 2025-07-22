@@ -9,6 +9,8 @@ public class Manager : MonoBehaviour
 
     private ResourcesManager _resources = new ResourcesManager();
     public static ResourcesManager Resources { get { return Instance._resources; } }
+    private BagManager _bag = new BagManager();
+    public static BagManager Bag { get { return Instance._bag; } }
     public static void Init()
     {
         if (_instance != null)

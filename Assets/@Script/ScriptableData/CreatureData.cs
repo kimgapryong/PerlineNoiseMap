@@ -6,6 +6,7 @@ using UnityEngine;
 public class CreatureData : ScriptableObject
 {
     public float hp;
+    public float jumpForce;
     public float speed;
     public float damage;
     public float defence;

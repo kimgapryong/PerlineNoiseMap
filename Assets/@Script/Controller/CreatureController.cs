@@ -22,7 +22,18 @@ public class CreatureController : BaseController
     public Collider coll;
     private Coroutine _coroutine;
     public float MaxHp { get; private set; }
-    public float CurHp { get { return CurHp; } set { CurHp = value; hpAction.Invoke(value, MaxHp); } }
+    private float _curHp;
+
+    public float CurHp
+    {
+        get => _curHp;
+        set
+        {
+            _curHp = value;
+            hpAction?.Invoke(_curHp, MaxHp);
+        }
+    }
+    public float JumpForce { get; private set; }
     public float Speed { get; private set; }
     public float Damage {  get; private set; }  
     public float Defence { get; private set; }
@@ -41,6 +52,7 @@ public class CreatureController : BaseController
 
         MaxHp = _data.hp;
         CurHp = MaxHp;
+        JumpForce = _data.jumpForce;
         Speed = _data.speed;
         Damage = _data.damage;
         Defence = _data.defence;
