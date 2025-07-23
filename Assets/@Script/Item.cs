@@ -10,11 +10,15 @@ public class Item : MonoBehaviour
 
     private float distance = 8f;
     private float itemSpeed = 4.5f;
+
+    Color myColor;
     public void SetType(Define.TileType type, string name)
     {
         itemName = name;
         this.type = type;
+        myColor = GetComponent<MeshRenderer>().materials[0].color;
         player = FindObjectOfType<PlayerController>();
+
     }
 
     private void Update()
@@ -26,12 +30,12 @@ public class Item : MonoBehaviour
     {
         if (collision.gameObject.GetComponent<PlayerController>() == null)
             return;
-
+        Debug.LogWarning(myColor);
         // bagManager¿Í ¿¬µ¿
-        Manager.Bag.SetItem(type, itemName);
+        Manager.Bag.SetItem(type, itemName, myColor);
 
         MainCanvas canvas = Manager.UI.SceneUI as MainCanvas;
-        Debug.Log(canvas.name);
+        
         InvenFragment inven = canvas.CheckItem(type);
 
         inven.SetBagItem(type, Manager.Bag.GetItem(type));

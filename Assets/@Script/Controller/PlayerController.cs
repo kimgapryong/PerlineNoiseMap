@@ -17,8 +17,13 @@ public class PlayerController : CreatureController
     private float yRotate;
     private Vector3 moveDir;
 
-    Action<Vector3> vecAction;
+    Action<Vector3, bool, Define.TileType> vecAction;
     private Vector3 _vec;
+
+    
+    private bool rebtn;
+    private int curKey; //무슨 키을 사용했었는지
+    private Define.TileType curType = Define.TileType.None;
     public Vector3 TileVec
     {
         get { return _vec; }
@@ -26,7 +31,7 @@ public class PlayerController : CreatureController
         set
         {
             _vec = value;
-            vecAction?.Invoke(value);
+            vecAction?.Invoke(value, rebtn, curType);
         }
     }
     public override bool Init()
@@ -59,7 +64,27 @@ public class PlayerController : CreatureController
 
         if (Input.GetMouseButton(0))
             Dig();
-    
+
+        for (int i = 1; i <= 8; i++)
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha0 + i))
+            {
+                if(i == curKey)
+                {
+                    curKey = 0;
+                    rebtn = false;
+                    break;
+                }
+                curKey = i;
+                rebtn = true;
+                
+                MainCanvas canvase =  Manager.UI.SceneUI as MainCanvas;
+                curType = canvase.invenList[i - 1]._type;
+               
+                break;
+            }
+        }
+
     }
     private void FixedUpdate()
     {
@@ -142,6 +167,6 @@ public class PlayerController : CreatureController
         Camera.main.transform.rotation = Quaternion.Euler(xRotate, yRotate + 180, 0);
         
     }
-
+    
 
 }

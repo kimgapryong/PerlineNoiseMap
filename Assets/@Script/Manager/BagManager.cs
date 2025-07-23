@@ -6,7 +6,7 @@ public class BagManager
 {
     Dictionary<Define.TileType, BagItem> itemDic = new Dictionary<Define.TileType, BagItem>();
 
-    public void SetItem(Define.TileType type,string name)
+    public void SetItem(Define.TileType type,string name, Color color)
     {
         //처음 아이템의 갯수을 보고 청소해줌
         //GarbegeItem(type);
@@ -19,7 +19,7 @@ public class BagManager
             return;
         }
 
-        item = new BagItem() { name = name, count = 1, type = type };
+        item = new BagItem() { name = name, count = 1, type = type, color = color };
         itemDic.Add(type, item);
     }
     public bool UseBagItem(Define.TileType type)
@@ -65,6 +65,6 @@ public struct BagItem
     public string name;
     public int count;
     public Define.TileType type;
-
+    public Color color;
 }
 

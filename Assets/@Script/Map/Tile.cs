@@ -51,7 +51,7 @@ public class Tile : MonoBehaviour
     private void CheckShader(float exithp)
     {
         float persent = exithp / hp * 100;
-        Debug.Log(persent);
+        
         if (persent <= 20)
             ChangeMater(Manager.Resources.Load<Material>("Material/Cleave4"));
         else if (persent <= 40)

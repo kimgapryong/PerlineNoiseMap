@@ -10,7 +10,7 @@ public class MainCanvas : UI_Scene
     }
 
     private int invenCount = 8;
-    private List<InvenFragment> invenList= new List<InvenFragment>();
+    public List<InvenFragment> invenList= new List<InvenFragment>();
     
     public override bool Init()
     {
