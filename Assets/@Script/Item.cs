@@ -37,10 +37,11 @@ public class Item : MonoBehaviour
         MainCanvas canvas = Manager.UI.SceneUI as MainCanvas;
         
         InvenFragment inven = canvas.CheckItem(type);
-
+        
         inven.SetBagItem(type, Manager.Bag.GetItem(type));
-
+        
         Destroy(gameObject);
+
     }
    
 }
