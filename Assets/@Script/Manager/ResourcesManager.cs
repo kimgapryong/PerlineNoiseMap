@@ -16,20 +16,21 @@ public class ResourcesManager
         return obj as T;
     }
 
-    public GameObject Instantiate(string name, Transform parent = null)
+    public GameObject Instantiate(string name, Transform parent = null, Action<GameObject> callback = null)
     {
         GameObject go = Load<GameObject>(name);
         GameObject obj = Object.Instantiate(go, parent);
         obj.name = name;
 
+        callback?.Invoke(obj);
         return obj;
     }
-    public GameObject Instantiate(string name, Vector3 pos, Quaternion rot, Transform parent = null)
+    public GameObject Instantiate(string name, Vector3 pos, Quaternion rot, Transform parent = null, Action<GameObject> callback = null)
     {
-        GameObject obj = Instantiate(name, parent);
+        GameObject obj = Instantiate(name, parent, callback);
         obj.transform.localPosition = pos;
         obj.transform.rotation = rot;
-
+        
         return obj;
     }
   

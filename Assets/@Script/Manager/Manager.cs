@@ -9,8 +9,15 @@ public class Manager : MonoBehaviour
 
     private ResourcesManager _resources = new ResourcesManager();
     public static ResourcesManager Resources { get { return Instance._resources; } }
+
     private BagManager _bag = new BagManager();
     public static BagManager Bag { get { return Instance._bag; } }
+
+    private UIManager _ui = new UIManager();
+    public static UIManager UI { get { return Instance._ui; } }
+
+    private CreateManager _create = new CreateManager();
+    public static CreateManager Create { get { return Instance._create; } }
     public static void Init()
     {
         if (_instance != null)

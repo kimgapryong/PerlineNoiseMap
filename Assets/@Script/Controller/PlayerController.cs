@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,6 +16,19 @@ public class PlayerController : CreatureController
     private float xRotate;
     private float yRotate;
     private Vector3 moveDir;
+
+    Action<Vector3> vecAction;
+    private Vector3 _vec;
+    public Vector3 TileVec
+    {
+        get { return _vec; }
+
+        set
+        {
+            _vec = value;
+            vecAction?.Invoke(value);
+        }
+    }
     public override bool Init()
     {
         if(base.Init() == false)
@@ -26,6 +40,9 @@ public class PlayerController : CreatureController
 
         Cursor.lockState = CursorLockMode.Locked;
         Camera.main.GetComponent<CameraController>().SetInfo(eye);
+
+        vecAction -= Manager.Create.GetPosition;
+        vecAction += Manager.Create.GetPosition;
 
         return true;
     }
@@ -105,8 +122,10 @@ public class PlayerController : CreatureController
             if(tile ==null) continue;
 
             curTile = tile;
+            TileVec = Vector3Int.RoundToInt(tiles.point + tiles.normal * 2); 
             break;
         }
+       
     }
 
     private void MouseRotate()
@@ -123,4 +142,6 @@ public class PlayerController : CreatureController
         Camera.main.transform.rotation = Quaternion.Euler(xRotate, yRotate + 180, 0);
         
     }
+
+
 }

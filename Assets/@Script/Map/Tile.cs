@@ -9,18 +9,17 @@ public class Tile : MonoBehaviour
 
     private string tileName;
     public Define.TileType tileType;
-    public float point;
+    public float point; 
     private float hp;
     public float curHp;
 
     private string path;
 
     private MeshRenderer meshRenderer;
-    public Tile GetSetTile(string name, Define.TileType type, float point, float hp)
+    public Tile GetSetTile(string name, Define.TileType type,  float hp)
     {
         tileName = name;
         tileType = type;
-        this.point = point;
         this.hp = hp;
         curHp = hp;
 
@@ -47,8 +46,7 @@ public class Tile : MonoBehaviour
     }
     public void OnDie()
     {
-        Manager.Resources.Instantiate()
-        Destroy(gameObject);
+        ChangeItemMode();
     }
     private void CheckShader(float exithp)
     {
@@ -82,5 +80,25 @@ public class Tile : MonoBehaviour
         newMats[1] = mat;
 
         meshRenderer.materials = newMats;
+    }
+    private void ResetMaterial()
+    {
+        Material[] newMats = new Material[1];
+        newMats[0] = meshRenderer.materials[0];
+
+        meshRenderer.materials = newMats;
+    }
+    private void ChangeItemMode()
+    {
+        transform.localScale = Vector3.one;
+
+        gameObject.AddComponent<Rigidbody>();
+        Item item = gameObject.AddComponent<Item>();
+        item.SetType(tileType, tileName);
+
+        //머터리얼 초기화
+        ResetMaterial();
+
+        Destroy(this);
     }
 }

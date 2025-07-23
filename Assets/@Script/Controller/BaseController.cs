@@ -11,7 +11,7 @@ public class BaseController : MonoBehaviour
         if (_check)
             return false;
 
-
+        _check = true;
         return true;
     }
     private void Start()

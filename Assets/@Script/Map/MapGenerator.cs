@@ -35,13 +35,6 @@ public class MapGenerator : MonoBehaviour
     //오브젝트가 한번에 이동해야 하는 위치
     private int objTrans = 4;
 
-    
-    
-
-    private void Start()
-    {
-        CraeteMapGenerator();
-    }
     public void CraeteMapGenerator()
     {
         float[,] noiseMap = Noise.GetNoise(maxWidth, maxHeight, seed, noiseScale, octaves, wave, cycle, vec);
@@ -53,7 +46,7 @@ public class MapGenerator : MonoBehaviour
                 Vector3Int dicVec = new Vector3Int(x, 0, y);
                 GameObject obj = Manager.Resources.Instantiate("Water", (Vector3)dicVec * objTrans, Quaternion.identity);
                 Debug.Log(obj);
-                Tile tile = obj.AddComponent<Tile>().GetSetTile("물",Define.TileType.Water, 0, 100);
+                Tile tile = obj.AddComponent<Tile>().GetSetTile("물",Define.TileType.Water, 100);
                 _tileDic.Add(dicVec, tile);
             }
         }
@@ -67,7 +60,7 @@ public class MapGenerator : MonoBehaviour
                         {
                             Vector3Int dicVec = new Vector3Int(x, value, y);
                             GameObject obj = Manager.Resources.Instantiate("Rock", (Vector3)dicVec * objTrans, Quaternion.identity);
-                            Tile tile = obj.AddComponent<Tile>().GetSetTile("돌", Define.TileType.Rock, value, 100);
+                            Tile tile = obj.AddComponent<Tile>().GetSetTile("돌", Define.TileType.Rock, 100);
                             if (_tileDic.TryGetValue(dicVec, out Tile curtile))
                             {
                                 Destroy(curtile.gameObject);
@@ -111,7 +104,7 @@ public class MapGenerator : MonoBehaviour
 
 
                             GameObject obj = Manager.Resources.Instantiate("Iland", (Vector3)vec * objTrans, Quaternion.identity);
-                            Tile tile = obj.AddComponent<Tile>().GetSetTile("흙", Define.TileType.Ground, i, 100);
+                            Tile tile = obj.AddComponent<Tile>().GetSetTile("흙", Define.TileType.Ground,  100);
                             _tileDic.Add(vec, tile);
 
                         }
@@ -173,7 +166,7 @@ public class MapGenerator : MonoBehaviour
             curVec += Vector3Int.up;
             
             GameObject obj = Manager.Resources.Instantiate("Tree", (Vector3)curVec * objTrans, Quaternion.identity);
-            Tile tile = obj.AddComponent<Tile>().GetSetTile("나무", Define.TileType.Tree, i, 100);
+            Tile tile = obj.AddComponent<Tile>().GetSetTile("나무", Define.TileType.Tree,  100);
             if (_tileDic.ContainsKey(curVec))
                 continue;
 
@@ -185,9 +178,8 @@ public class MapGenerator : MonoBehaviour
                 for(int k = 0; k < leafArray.Length; k++)
                 {
                     Vector3Int leafVec = curVec + leafArray[k];
-                    Debug.Log(leafVec);
                     GameObject leaf = Manager.Resources.Instantiate("Leaf", (Vector3)leafVec * objTrans, Quaternion.identity);
-                    Tile leafTile = leaf.AddComponent<Tile>().GetSetTile("나뭇잎", Define.TileType.Leaf, i, 100);
+                    Tile leafTile = leaf.AddComponent<Tile>().GetSetTile("나뭇잎", Define.TileType.Leaf,  100);
                     if (_tileDic.ContainsKey(leafVec))
                         continue;
                     _tileDic.Add(leafVec, leafTile);
