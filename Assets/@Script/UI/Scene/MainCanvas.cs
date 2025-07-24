@@ -11,7 +11,12 @@ public class MainCanvas : UI_Scene
 
     private int invenCount = 8;
     public List<InvenFragment> invenList= new List<InvenFragment>();
-    
+    public ItemCombinScriptable[] combinDatas;
+
+    public void SetInfo(ItemCombinScriptable[] datas)
+    {
+        combinDatas = datas;
+    }
     public override bool Init()
     {
         if(base.Init() == false)

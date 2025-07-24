@@ -4,12 +4,7 @@ using UnityEngine;
 
 public static class Define
 {
-    public enum ItemType
-    {
-        None,
-        Tile,
-        Weapon
-    }
+  
    public enum TileType
     {
         None,
