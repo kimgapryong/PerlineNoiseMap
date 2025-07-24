@@ -17,13 +17,16 @@ public class PlayerController : CreatureController
     private float yRotate;
     private Vector3 moveDir;
 
-    Action<Vector3, bool, Define.TileType> vecAction;
+    Action<Vector3, bool, InvenFragment> vecAction;
     private Vector3 _vec;
 
+    //아이템 설치 제거 hit
+    private float delHit = 5.4f;
+    private float insHit = 22.5f;
     
     private bool rebtn;
     private int curKey; //무슨 키을 사용했었는지
-    private Define.TileType curType = Define.TileType.None;
+    private InvenFragment inven = null;
     public Vector3 TileVec
     {
         get { return _vec; }
@@ -31,7 +34,8 @@ public class PlayerController : CreatureController
         set
         {
             _vec = value;
-            vecAction?.Invoke(value, rebtn, curType);
+            //Debug.Log(_vec);
+            vecAction?.Invoke(value, rebtn, inven);
         }
     }
     public override bool Init()
@@ -73,18 +77,26 @@ public class PlayerController : CreatureController
                 {
                     curKey = 0;
                     rebtn = false;
+                    Manager.Create.DeleteData();
                     break;
                 }
                 curKey = i;
                 rebtn = true;
                 
                 MainCanvas canvase =  Manager.UI.SceneUI as MainCanvas;
-                curType = canvase.invenList[i - 1]._type;
+                inven = canvase.invenList[i - 1];
                
                 break;
             }
         }
 
+        if (Input.GetMouseButtonDown(0))
+        {
+            if(!rebtn)
+                return;
+
+            Manager.Create.UseItem();
+        }
     }
     private void FixedUpdate()
     {
@@ -140,14 +152,20 @@ public class PlayerController : CreatureController
     private void DigHit()
     {
         Tile tile;
-        RaycastHit[] hit = Physics.RaycastAll(eye.transform.position  , Camera.main.transform.forward, 5f);
-        foreach(var tiles in hit)
+        RaycastHit[] hit;
+        if(!rebtn)
+            hit = Physics.RaycastAll(eye.transform.position  , Camera.main.transform.forward, delHit);
+        else
+            hit = Physics.RaycastAll(eye.transform.position, Camera.main.transform.forward, insHit);
+
+        foreach (var tiles in hit)
         {
             tile = tiles.transform.GetComponent<Tile>();
             if(tile ==null) continue;
 
             curTile = tile;
-            TileVec = Vector3Int.RoundToInt(tiles.point + tiles.normal * 2); 
+            TileVec = Vector3Int.RoundToInt(tiles.point/4 + tiles.normal/2) * 4;
+          
             break;
         }
        

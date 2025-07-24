@@ -8,22 +8,26 @@ public class CreateManager
     private Vector3 createPos;
     private GameObject curObj;
     private Define.TileType curType;
-    public void GetPosition(Vector3 vec, bool check, Define.TileType type)
+    private InvenFragment curInven;
+
+    public void GetPosition(Vector3 vec, bool check, InvenFragment inven)
     {
-        if(createPos == vec) 
+        if (inven == null)
             return;
 
+        Define.TileType type = inven._type;
+        
         if (!check || type == Define.TileType.None)
         {
             DeleteData();
             return;
         }
-
-        if(curType != type)
-            DeleteData();
-            
        
-        if(curObj != null)
+        if (curType != type)
+            DeleteData();
+
+
+        if (curObj != null)
         {
             createPos = vec;
             curObj.transform.position = createPos;
@@ -33,23 +37,48 @@ public class CreateManager
             
         BagItem item = Manager.Bag.GetItem(type);
         GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        cube.GetComponent<MeshRenderer>().materials[0].color = item.color;
+
+        Material[] newMat = new Material[] { Manager.Resources.Load<Material>($"Material/{item.name}Mat") };
+        cube.GetComponent<MeshRenderer>().materials = newMat;
+        
         cube.transform.localScale = Vector3.one * 4;
         cube.transform.position = vec;
         curObj = cube;
 
         createPos = vec;
         curType = type;
+        curInven = inven;
     }
-
-    private void DeleteData()
+    public void UseItem()
     {
         if(curObj == null)
             return;
 
-        curObj = null;
-        UnityEngine.Object.Destroy(curObj);
+        CreateTile();
+        //curInven.UseItem(CreateTile);
     }
+    private void CreateTile()
+    {
+        Debug.Log(curType);
+        BagItem item = Manager.Bag.GetItem(curType);
 
+        Material[] newMat = new Material[] { Manager.Resources.Load<Material>($"Material/{item.name}") };
+        curObj.GetComponent<MeshRenderer>().materials = newMat;
+
+        Tile tile = curObj.AddComponent<Tile>();
+        tile.GetSetTile(item.name, item.type, 100);
+
+        curObj = null;
+        curInven.UseItem();
+    }
+    public void DeleteData()
+    {
+        if(curObj == null)
+            return;
+
+        UnityEngine.Object.DestroyImmediate(curObj);
+        curObj = null;
+    }
+  
     
 }

@@ -46,7 +46,7 @@ public class MapGenerator : MonoBehaviour
                 Vector3Int dicVec = new Vector3Int(x, 0, y);
                 GameObject obj = Manager.Resources.Instantiate("Water", (Vector3)dicVec * objTrans, Quaternion.identity);
                 Debug.Log(obj);
-                Tile tile = obj.AddComponent<Tile>().GetSetTile("¹°",Define.TileType.Water, 100);
+                Tile tile = obj.AddComponent<Tile>().GetSetTile("Water",Define.TileType.Water, 100);
                 _tileDic.Add(dicVec, tile);
             }
         }
@@ -60,7 +60,7 @@ public class MapGenerator : MonoBehaviour
                         {
                             Vector3Int dicVec = new Vector3Int(x, value, y);
                             GameObject obj = Manager.Resources.Instantiate("Rock", (Vector3)dicVec * objTrans, Quaternion.identity);
-                            Tile tile = obj.AddComponent<Tile>().GetSetTile("µ¹", Define.TileType.Rock, 100);
+                            Tile tile = obj.AddComponent<Tile>().GetSetTile("Rock", Define.TileType.Rock, 100);
                             if (_tileDic.TryGetValue(dicVec, out Tile curtile))
                             {
                                 Destroy(curtile.gameObject);
@@ -104,7 +104,7 @@ public class MapGenerator : MonoBehaviour
 
 
                             GameObject obj = Manager.Resources.Instantiate("Iland", (Vector3)vec * objTrans, Quaternion.identity);
-                            Tile tile = obj.AddComponent<Tile>().GetSetTile("Èë", Define.TileType.Ground,  100);
+                            Tile tile = obj.AddComponent<Tile>().GetSetTile("Iland", Define.TileType.Ground,  100);
                             _tileDic.Add(vec, tile);
 
                         }
@@ -166,7 +166,7 @@ public class MapGenerator : MonoBehaviour
             curVec += Vector3Int.up;
             
             GameObject obj = Manager.Resources.Instantiate("Tree", (Vector3)curVec * objTrans, Quaternion.identity);
-            Tile tile = obj.AddComponent<Tile>().GetSetTile("³ª¹«", Define.TileType.Tree,  100);
+            Tile tile = obj.AddComponent<Tile>().GetSetTile("Tree", Define.TileType.Tree,  100);
             if (_tileDic.ContainsKey(curVec))
                 continue;
 
@@ -179,7 +179,7 @@ public class MapGenerator : MonoBehaviour
                 {
                     Vector3Int leafVec = curVec + leafArray[k];
                     GameObject leaf = Manager.Resources.Instantiate("Leaf", (Vector3)leafVec * objTrans, Quaternion.identity);
-                    Tile leafTile = leaf.AddComponent<Tile>().GetSetTile("³ª¹µÀÙ", Define.TileType.Leaf,  100);
+                    Tile leafTile = leaf.AddComponent<Tile>().GetSetTile("Leaf", Define.TileType.Leaf,  100);
                     if (_tileDic.ContainsKey(leafVec))
                         continue;
                     _tileDic.Add(leafVec, leafTile);

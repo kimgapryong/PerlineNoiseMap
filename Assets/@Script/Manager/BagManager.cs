@@ -18,9 +18,10 @@ public class BagManager
             itemDic[type] = item;
             return;
         }
-
+        
         item = new BagItem() { name = name, count = 1, type = type, color = color };
         itemDic.Add(type, item);
+        Debug.Log($"{item.name} µî·Ï");
     }
     public bool UseBagItem(Define.TileType type)
     {

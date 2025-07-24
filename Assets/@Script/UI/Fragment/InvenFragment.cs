@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -45,10 +46,12 @@ public class InvenFragment : UI_Base
 
         return false;
     }
-    private void UseItem()
+    public void UseItem()//Action callback)
     {
         if(_type == Define.TileType.None )
             return;
+
+        //callback?.Invoke();
 
         if (!Manager.Bag.UseBagItem(_type))
             ResetItem();
