@@ -12,7 +12,9 @@ public static class Define
         Ground,
         Rock,
         Tree,
-        Leaf
+        Leaf,
+        Stick,
+        Board,
     }
     public enum State
     {

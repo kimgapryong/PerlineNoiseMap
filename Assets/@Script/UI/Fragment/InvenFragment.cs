@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class InvenFragment : UI_Base
@@ -33,7 +30,7 @@ public class InvenFragment : UI_Base
         _item = item;
         Debug.Log(_type);
 
-        GetText((int)Texts.ItemText).text = item.name;
+        GetText((int)Texts.ItemText).text = item.itemName;
         GetText((int)Texts.ItemNumText).text = item.count.ToString();
     }
     public bool CheckItem(Define.TileType type)
@@ -56,7 +53,6 @@ public class InvenFragment : UI_Base
         if (!Manager.Bag.UseBagItem(_type))
             ResetItem();
 
-        
     }
 
     private void ResetItem()

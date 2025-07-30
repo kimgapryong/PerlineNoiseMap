@@ -35,9 +35,11 @@ public class UI_Base : MonoBehaviour
 
         for(int i = 0; i < names.Length; i++)
             objs[i] = gameObject.FindChild<T>(names[i]);
+            
     }
 
-    protected void BindObject(Type type) { Bind<GameObject>(type); }
+    protected void 
+        BindObject(Type type) { Bind<GameObject>(type); }
     protected void BindImage(Type type) { Bind<Image>(type); }
     protected void BindTextPro(Type type) { Bind<TextMeshProUGUI>(type); }
     protected void BindText(Type type) { Bind<Text>(type); }

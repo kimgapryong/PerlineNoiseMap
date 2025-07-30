@@ -14,7 +14,7 @@ public static class Utils
 
     public static T FindChild<T>(this GameObject obj, string name) where T : UnityEngine.Object
     {
-        if (typeof(T).Equals(typeof(GameObject)))
+        if (typeof(T) == (typeof(GameObject)))
             return FindObject(obj, name) as T;
 
         foreach(var child in obj.GetComponentsInChildren<T>())

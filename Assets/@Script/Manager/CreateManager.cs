@@ -38,7 +38,7 @@ public class CreateManager
         BagItem item = Manager.Bag.GetItem(type);
         GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
 
-        Material[] newMat = new Material[] { Manager.Resources.Load<Material>($"Material/{item.name}Mat") };
+        Material[] newMat = new Material[] { Manager.Resources.Load<Material>($"Material/{item.itemName}Mat") };
         cube.GetComponent<MeshRenderer>().materials = newMat;
         
         cube.transform.localScale = Vector3.one * 4;
@@ -62,11 +62,11 @@ public class CreateManager
         Debug.Log(curType);
         BagItem item = Manager.Bag.GetItem(curType);
 
-        Material[] newMat = new Material[] { Manager.Resources.Load<Material>($"Material/{item.name}") };
+        Material[] newMat = new Material[] { Manager.Resources.Load<Material>($"Material/{item.itemName}") };
         curObj.GetComponent<MeshRenderer>().materials = newMat;
 
         Tile tile = curObj.AddComponent<Tile>();
-        tile.GetSetTile(item.name, item.type, 100);
+        tile.GetSetTile(item.itemName, item.type, 100);
 
         curObj = null;
         curInven.UseItem();

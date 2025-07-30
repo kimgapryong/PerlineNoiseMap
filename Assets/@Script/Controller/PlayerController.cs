@@ -27,6 +27,8 @@ public class PlayerController : CreatureController
     private bool rebtn;
     private int curKey; //무슨 키을 사용했었는지
     private InvenFragment inven = null;
+
+    private CombinPop combin;
     public Vector3 TileVec
     {
         get { return _vec; }
@@ -96,6 +98,27 @@ public class PlayerController : CreatureController
                 return;
 
             Manager.Create.UseItem();
+        }
+
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            Debug.Log(combin);
+            if(combin != null)
+            {
+                
+                Manager.UI.CloseAllPopupUI();
+                combin = null;
+                Cursor.lockState = CursorLockMode.Locked;
+                return;
+            }
+
+            Cursor.lockState = CursorLockMode.None;   
+            Manager.UI.ShowPopUI<CombinPop>(callback: (pop) =>
+            {
+                MainCanvas canvas = Manager.UI.SceneUI as MainCanvas;
+                combin = pop;
+                pop.SetInfo(canvas.combinDatas);
+            });
         }
     }
     private void FixedUpdate()
