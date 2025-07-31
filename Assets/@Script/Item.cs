@@ -37,7 +37,7 @@ public class Item : MonoBehaviour
         
         InvenFragment inven = canvas.CheckItem(type);
         
-        inven.SetBagItem(type, Manager.Bag.GetItem(type));
+        inven.SetBagItem(type);
         
         Destroy(gameObject);
 

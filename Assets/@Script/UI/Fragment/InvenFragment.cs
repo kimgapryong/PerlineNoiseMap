@@ -21,36 +21,46 @@ public class InvenFragment : UI_Base
         return true;
     }
 
-    public void SetBagItem(Define.TileType type,BagItem item)
+    public void SetBagItem(Define.TileType type)
     {
+        Debug.Log(type);
         GetText((int)Texts.ItemText).gameObject.SetActive(true);
         GetText((int)Texts.ItemNumText).gameObject.SetActive(true);
         
         _type = type;
-        _item = item;
-        Debug.Log(_type);
+        _item = Manager.Bag.GetItem(type);
 
-        GetText((int)Texts.ItemText).text = item.itemName;
-        GetText((int)Texts.ItemNumText).text = item.count.ToString();
+        GetText((int)Texts.ItemText).text = _item.itemName;
+        GetText((int)Texts.ItemNumText).text = _item.count.ToString();
+
+        if(_item.count <= 0)
+            ResetItem();
+
     }
     public bool CheckItem(Define.TileType type)
     {
         if(_type == type ) 
             return true;
 
-        if (_type == Define.TileType.None)
+
+        return false;
+    }
+
+    public bool CheckNoneItem(Define.TileType type)
+    {
+        if (_type == Define.TileType.None )
             return true;
 
         return false;
     }
-    public void UseItem()//Action callback)
+    public void UseItem(int count = 1)//Action callback)
     {
         if(_type == Define.TileType.None )
             return;
 
         //callback?.Invoke();
 
-        if (!Manager.Bag.UseBagItem(_type))
+        if (!Manager.Bag.UseBagItem(_type, count))
             ResetItem();
 
     }

@@ -23,8 +23,7 @@ public class BagManager
         itemDic.Add(type, item);
         Debug.Log($"{item.itemName} µî·Ï");
     }
-    public bool 
-        UseBagItem(Define.TileType type, int count = 1)
+    public bool UseBagItem(Define.TileType type, int count = 1)
     {
         BagItem item;
         if (itemDic.TryGetValue(type, out item) == false)

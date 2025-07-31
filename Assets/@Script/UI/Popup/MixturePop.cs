@@ -66,17 +66,24 @@ public class MixturePop : UI_Pop
         if(!CheckItem())
             return;
 
+        MainCanvas canvas = Manager.UI.SceneUI as MainCanvas;
+
         foreach (CombineData item in _items.datas)
-            Manager.Bag.UseBagItem(item.type, item.count);
+        {
+            InvenFragment inventory = canvas.InvenType(item.type);
+            inventory.UseItem(item.count);
+            inventory.SetBagItem(item.type);
+        }
+            
 
         foreach (IngredientFragment fragment in _ingredient)
             fragment.Refresh();
 
         Manager.Bag.SetItem(_items.type, _items.name, _items.count);
 
-        MainCanvas canvas = Manager.UI.SceneUI as MainCanvas;
+       
         InvenFragment inven = canvas.CheckItem(_items.type);
-        inven.SetBagItem(_items.type, Manager.Bag.GetItem(_items.type));
+        inven.SetBagItem(_items.type);
        
     }
     private bool CheckItem()

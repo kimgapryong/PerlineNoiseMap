@@ -35,14 +35,30 @@ public class MainCanvas : UI_Scene
         return true;
     }
 
+    public InvenFragment InvenType(Define.TileType type)
+    {
+        foreach(InvenFragment inven in invenList)
+        {
+            if(inven._type == type)
+                return inven;
+        }
+
+        Debug.LogWarning("이상발생");
+        return null;
+    }
     public InvenFragment CheckItem(Define.TileType type)
     {
         foreach(InvenFragment fragment in invenList)
         {
             if (fragment.CheckItem(type))
                 return fragment;
+            
         }
-
+        foreach (InvenFragment fragment in invenList)
+        {
+            if (fragment.CheckNoneItem(type))
+                return fragment;
+        }
         Debug.LogError("가득하다");
         return null;
     }
