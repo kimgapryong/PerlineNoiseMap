@@ -17,9 +17,12 @@ public class UI_InventroyFragment : UI_Base, IDropHandler
     }
     public void OnDrop(PointerEventData eventData)
     {
-       
+        
     }
-
+    public void SetItem(Define.TileType type)
+    {
+        _type = type;
+    }
     public bool CheckType(Define.TileType type)
     {
         if(transform.GetComponentInChildren<UI_BackgroundDrag>() == null)

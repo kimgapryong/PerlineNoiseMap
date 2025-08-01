@@ -74,4 +74,6 @@ public class InvenFragment : UI_Base
         _type = Define.TileType.None;
     }
     
+    
+    
 }

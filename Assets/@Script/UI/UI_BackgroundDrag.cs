@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class UI_BackgroundDrag : UI_Base, IDragHandler
+public class UI_BackgroundDrag : UI_Base, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
     private Define.TileType _type;
     private BagItem _item;
@@ -25,10 +25,7 @@ public class UI_BackgroundDrag : UI_Base, IDragHandler
         return true;
 
     }
-    public void OnDrag(PointerEventData eventData)
-    {
-        
-    }
+  
     public void SetInfo(Define.TileType type)
     {
         _type = type;
@@ -38,6 +35,23 @@ public class UI_BackgroundDrag : UI_Base, IDragHandler
     public void ChangeData()
     {
         _type = Define.TileType.None;
+        
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        canvasGroup.alpha = 1f;
+        canvasGroup.blocksRaycasts = true;
+
+    }
+    public void OnDrag(PointerEventData eventData)
+    {
+        transform.position = eventData.position;
+    }
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        canvasGroup.alpha = 0.6f;
+        canvasGroup.blocksRaycasts = false;
         
     }
 }
