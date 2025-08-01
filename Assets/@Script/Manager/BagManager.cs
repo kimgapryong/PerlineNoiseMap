@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BagManager 
 {
-    Dictionary<Define.TileType, BagItem> itemDic = new Dictionary<Define.TileType, BagItem>();
+    public Dictionary<Define.TileType, BagItem> itemDic = new Dictionary<Define.TileType, BagItem>();
 
     public void SetItem(Define.TileType type,string name, int count = 1)
     {
