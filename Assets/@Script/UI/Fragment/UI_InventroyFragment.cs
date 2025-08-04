@@ -17,7 +17,10 @@ public class UI_InventroyFragment : UI_Base, IDropHandler
     }
     public void OnDrop(PointerEventData eventData)
     {
-        
+        if(eventData.pointerDrag == null)
+            return;
+
+        eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition = GetComponent<RectTransform>().anchoredPosition;
     }
     public void SetItem(Define.TileType type)
     {

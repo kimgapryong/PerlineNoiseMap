@@ -1,8 +1,10 @@
+using System;
 using UnityEngine;
 
 public class InvenFragment : UI_Base
 {
     public Define.TileType _type = Define.TileType.None;
+    
     BagItem _item;
    enum Texts
     {

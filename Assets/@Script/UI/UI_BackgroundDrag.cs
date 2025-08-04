@@ -5,12 +5,13 @@ using UnityEngine.EventSystems;
 
 public class UI_BackgroundDrag : UI_Base, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
-    private Define.TileType _type;
+    public Define.TileType _type;
     private BagItem _item;
     private CanvasGroup canvasGroup;
     enum Texts
     {
         Inventory_Txt,
+        ItemNum_Txt,
     }
 
     public override bool Init()
@@ -22,10 +23,20 @@ public class UI_BackgroundDrag : UI_Base, IDragHandler, IBeginDragHandler, IEndD
         _type = _item.type;
         canvasGroup = GetComponent<CanvasGroup>();
 
+        GetText((int)Texts.Inventory_Txt).text = _item.itemName;
+        GetText((int)Texts.ItemNum_Txt).text = _item.count.ToString();
+
         return true;
 
     }
-  
+    
+    public void Refresh(Define.TileType type)
+    {
+        _item = Manager.Bag.GetItem(type);
+
+        GetText((int)Texts.Inventory_Txt).text = _item.itemName;
+        GetText((int)Texts.ItemNum_Txt).text = _item.count.ToString();
+    }
     public void SetInfo(Define.TileType type)
     {
         _type = type;
@@ -46,7 +57,7 @@ public class UI_BackgroundDrag : UI_Base, IDragHandler, IBeginDragHandler, IEndD
     }
     public void OnDrag(PointerEventData eventData)
     {
-        transform.position = eventData.position;
+        transform.GetComponent<RectTransform>().anchoredPosition = eventData.delta;
     }
     public void OnBeginDrag(PointerEventData eventData)
     {

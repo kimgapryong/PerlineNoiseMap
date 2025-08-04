@@ -27,7 +27,7 @@ public class PlayerController : CreatureController
     private bool rebtn;
     private int curKey; //무슨 키을 사용했었는지
     private InvenFragment inven = null;
-    private InventoryPop inventoryPop = null;
+    private InventoryCanvas inventoryPop = null;
 
     private CombinPop combin;
     public Vector3 TileVec
@@ -125,16 +125,22 @@ public class PlayerController : CreatureController
         if (Input.GetKeyDown(KeyCode.B))
         {
             if (inventoryPop == null)
-                Manager.UI.ShowSceneUI<InventoryPop>(callback: (scene) =>
+                Manager.UI.MakeSubItem<InventoryCanvas>(callback: (scene) =>
                 {
-                    MainCanvas main = Manager.UI.SceneUI as MainCanvas;
-                    scene.SetInfo(main.invenList);
+                    inventoryPop = scene;
                 });
 
             if (inventoryPop.gameObject.activeSelf)
+            {
                 inventoryPop.gameObject.SetActive(false);
+                Cursor.lockState = CursorLockMode.Locked;
+            }
             else
+            {
                 inventoryPop.gameObject.SetActive(true);
+                Cursor.lockState = CursorLockMode.None;
+            }
+                
         }
     }
     private void FixedUpdate()

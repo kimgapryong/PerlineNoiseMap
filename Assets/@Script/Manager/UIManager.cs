@@ -58,7 +58,7 @@ public class UIManager
         Manager.Resources.Instantiate($"UI/Scene/{key}", Root.transform, (go) =>
         {
             T sceneUI = go.GetOrAddComponent<T>();
-            SceneUI = sceneUI; 
+            SceneUI = sceneUI;
             callback?.Invoke(sceneUI);
         });
     }

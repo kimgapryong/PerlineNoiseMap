@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,23 +6,23 @@ using UnityEngine;
 public class BagManager 
 {
     public Dictionary<Define.TileType, BagItem> itemDic = new Dictionary<Define.TileType, BagItem>();
-
-    public void SetItem(Define.TileType type,string name, int count = 1)
+    public Func<Define.TileType, UI_BackgroundDrag> SetitemAction;
+    public void SetItem(Define.TileType type, string name, int count = 1)
     {
-        //처음 아이템의 갯수을 보고 청소해줌
-        //GarbegeItem(type);
+        UI_BackgroundDrag back = SetitemAction?.Invoke(type);
 
-        BagItem item;
-        if(itemDic.TryGetValue(type, out item))
+        if (itemDic.TryGetValue(type, out BagItem item))
         {
             item.count += count;
-            itemDic[type] = item;
-            return;
+            itemDic[type] = item;  // struct는 반드시 재할당 필요
         }
-        
-        item = new BagItem() { itemName = name, count = count, type = type };
-        itemDic.Add(type, item);
-        Debug.Log($"{item.itemName} 등록");
+        else
+        {
+            item = new BagItem { itemName = name, count = count, type = type };
+            itemDic.Add(type, item);
+        }
+
+        back?.Refresh(type);
     }
     public bool UseBagItem(Define.TileType type, int count = 1)
     {
