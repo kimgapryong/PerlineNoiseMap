@@ -15,6 +15,7 @@ public static class Define
         Leaf,
         Stick,
         Board,
+        Crafting,
     }
     public enum State
     {
