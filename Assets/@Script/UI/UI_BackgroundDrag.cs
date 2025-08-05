@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class UI_BackgroundDrag : UI_Base, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
     public Define.TileType _type;
     private BagItem _item;
     private CanvasGroup canvasGroup;
+
+    private Transform curParent;
     enum Texts
     {
         Inventory_Txt,
@@ -19,7 +22,7 @@ public class UI_BackgroundDrag : UI_Base, IDragHandler, IBeginDragHandler, IEndD
         if(base.Init() == false) 
             return false;
 
-        BindText(typeof(Texts));
+        
         _type = _item.type;
         canvasGroup = GetComponent<CanvasGroup>();
 
@@ -34,6 +37,7 @@ public class UI_BackgroundDrag : UI_Base, IDragHandler, IBeginDragHandler, IEndD
     {
         _item = Manager.Bag.GetItem(type);
 
+        Debug.Log(GetText((int)Texts.Inventory_Txt));
         GetText((int)Texts.Inventory_Txt).text = _item.itemName;
         GetText((int)Texts.ItemNum_Txt).text = _item.count.ToString();
     }
@@ -41,6 +45,8 @@ public class UI_BackgroundDrag : UI_Base, IDragHandler, IBeginDragHandler, IEndD
     {
         _type = type;
         _item = Manager.Bag.GetItem(type);
+        BindText(typeof(Texts));
+        GetComponent<Image>().color = Color.gray;
     }
 
     public void ChangeData()
@@ -54,15 +60,17 @@ public class UI_BackgroundDrag : UI_Base, IDragHandler, IBeginDragHandler, IEndD
         canvasGroup.alpha = 1f;
         canvasGroup.blocksRaycasts = true;
 
+        if(curParent == transform.parent)
+            transform.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
     }
     public void OnDrag(PointerEventData eventData)
     {
-        transform.GetComponent<RectTransform>().anchoredPosition = eventData.delta;
+        transform.GetComponent<RectTransform>().anchoredPosition += eventData.delta;
     }
     public void OnBeginDrag(PointerEventData eventData)
     {
         canvasGroup.alpha = 0.6f;
         canvasGroup.blocksRaycasts = false;
-        
+        curParent = transform.parent;
     }
 }

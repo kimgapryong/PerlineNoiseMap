@@ -7,7 +7,7 @@ public class CreateManager
 {
     private Vector3 createPos;
     private GameObject curObj;
-    private Define.TileType curType;
+    private Define.TileType curType = Define.TileType.None;
     private InvenFragment curInven;
 
     public void GetPosition(Vector3 vec, bool check, InvenFragment inven)
@@ -16,6 +16,7 @@ public class CreateManager
             return;
 
         Define.TileType type = inven._type;
+        curType = type;
         
         if (!check || type == Define.TileType.None)
         {
@@ -34,7 +35,10 @@ public class CreateManager
             
             return;
         }
-            
+        if (!Define.CheckTileType(curType))
+            return;
+
+
         BagItem item = Manager.Bag.GetItem(type);
         GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
 
@@ -46,7 +50,6 @@ public class CreateManager
         curObj = cube;
 
         createPos = vec;
-        curType = type;
         curInven = inven;
     }
     public void UseItem()
@@ -54,6 +57,7 @@ public class CreateManager
         if(curObj == null)
             return;
 
+       
         CreateTile();
         //curInven.UseItem(CreateTile);
     }

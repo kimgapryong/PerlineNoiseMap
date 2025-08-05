@@ -45,7 +45,6 @@ public class MapGenerator : MonoBehaviour
             {
                 Vector3Int dicVec = new Vector3Int(x, 0, y);
                 GameObject obj = Manager.Resources.Instantiate("Water", (Vector3)dicVec * objTrans, Quaternion.identity);
-                Debug.Log(obj);
                 Tile tile = obj.AddComponent<Tile>().GetSetTile("Water",Define.TileType.Water, 100);
                 _tileDic.Add(dicVec, tile);
             }

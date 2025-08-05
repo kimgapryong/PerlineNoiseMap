@@ -22,6 +22,7 @@ public class BagManager
             itemDic.Add(type, item);
         }
 
+        Debug.Log(back);
         back?.Refresh(type);
     }
     public bool UseBagItem(Define.TileType type, int count = 1)

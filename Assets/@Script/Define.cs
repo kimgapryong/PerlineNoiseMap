@@ -31,4 +31,24 @@ public static class Define
         Click,
         Press,
     }
+
+    public static bool CheckTileType(TileType type)
+    {
+        switch (type)
+        {
+            default:
+            case TileType.Ground:
+            case TileType.Rock:
+            case TileType.Tree:
+            case TileType.Leaf:
+            case TileType.Board:
+                return true;
+
+            case TileType.None:
+            case TileType.Stick:
+            case TileType.Water:
+                return false;
+        }
+
+    }
 }

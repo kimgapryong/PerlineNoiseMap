@@ -84,26 +84,21 @@ public class UIManager
    
     public void ClosePopUI(UI_Pop pop)
     {
-        Debug.Log("아이템 삭제");
+        
         if (_popStack.Count == 0)
             return;
-
-        Debug.Log(_popStack.Peek().name); 
         
         if (_popStack.Peek() != pop)
             return;
-
-        Debug.Log("아이템 삭제");
+        
         ClosePopUI();
     }
 
     public void ClosePopUI()
     {
-        Debug.Log("들어와");
         if (_popStack.Count == 0)
             return;
-
-        Debug.Log("들어2와");
+        
         UI_Pop pop = _popStack.Pop();
         UnityEngine.Object.Destroy(pop.gameObject);
         pop = null;

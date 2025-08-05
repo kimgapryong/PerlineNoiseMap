@@ -20,7 +20,8 @@ public class UI_InventroyFragment : UI_Base, IDropHandler
         if(eventData.pointerDrag == null)
             return;
 
-        eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition = GetComponent<RectTransform>().anchoredPosition;
+        eventData.pointerDrag.transform.SetParent(transform);
+        eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
     }
     public void SetItem(Define.TileType type)
     {

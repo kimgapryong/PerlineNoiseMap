@@ -10,6 +10,7 @@ public class PlayerController : CreatureController
     private Transform eye;
     private Transform body;
 
+    private bool take;
     private Tile curTile;
     public float mouseSpeed = 20f;
 
@@ -66,40 +67,44 @@ public class PlayerController : CreatureController
         MouseRotate();
         Walk();
 
-        if(Input.GetKeyDown(KeyCode.Space))
-            Jump();
-
-        if (Input.GetMouseButton(0))
-            Dig();
-
-        for (int i = 1; i <= 8; i++)
+        if (!take)
         {
-            if (Input.GetKeyDown(KeyCode.Alpha0 + i))
+            if (Input.GetKeyDown(KeyCode.Space))
+                Jump();
+
+            if (Input.GetMouseButton(0))
+                Dig();
+
+            for (int i = 1; i <= 8; i++)
             {
-                if(i == curKey)
+                if (Input.GetKeyDown(KeyCode.Alpha0 + i))
                 {
-                    curKey = 0;
-                    rebtn = false;
-                    Manager.Create.DeleteData();
+                    if (i == curKey)
+                    {
+                        curKey = 0;
+                        rebtn = false;
+                        Manager.Create.DeleteData();
+                        break;
+                    }
+                    curKey = i;
+                    rebtn = true;
+
+                    MainCanvas canvase = Manager.UI.SceneUI as MainCanvas;
+                    inven = canvase.invenList[i - 1];
+
                     break;
                 }
-                curKey = i;
-                rebtn = true;
-                
-                MainCanvas canvase =  Manager.UI.SceneUI as MainCanvas;
-                inven = canvase.invenList[i - 1];
-               
-                break;
+            }
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                if (!rebtn)
+                    return;
+
+                Manager.Create.UseItem();
             }
         }
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            if(!rebtn)
-                return;
-
-            Manager.Create.UseItem();
-        }
+       
 
         if (Input.GetKeyDown(KeyCode.I))
         {
@@ -134,11 +139,13 @@ public class PlayerController : CreatureController
             {
                 inventoryPop.gameObject.SetActive(false);
                 Cursor.lockState = CursorLockMode.Locked;
+                take = false;
             }
             else
             {
                 inventoryPop.gameObject.SetActive(true);
                 Cursor.lockState = CursorLockMode.None;
+                take = true;
             }
                 
         }
