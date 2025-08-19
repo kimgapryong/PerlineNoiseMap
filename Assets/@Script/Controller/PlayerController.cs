@@ -10,6 +10,8 @@ public class PlayerController : CreatureController
     private Transform eye;
     private Transform body;
 
+    public Action ItemAction;
+
     private bool take;
     private Tile curTile;
     public float mouseSpeed = 20f;
@@ -147,7 +149,11 @@ public class PlayerController : CreatureController
                 Cursor.lockState = CursorLockMode.None;
                 take = true;
             }
-                
+        }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            ItemAction?.Invoke();
         }
     }
     private void FixedUpdate()

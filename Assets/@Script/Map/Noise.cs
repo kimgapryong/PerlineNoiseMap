@@ -35,7 +35,7 @@ public static class Noise
                 {
                     float xValue = x / scale * wavetude + offsetVec[i].x;
                     float yValue = y / scale * wavetude + offsetVec[i].y;
-                    float noiseValue = Mathf.PerlinNoise(xValue, yValue) * 2 + 1;
+                    float noiseValue = Mathf.PerlinNoise(xValue, yValue) * 2 - 1;
                     
                     heightPoint += noiseValue * ampltude;
                     ampltude *= wave;

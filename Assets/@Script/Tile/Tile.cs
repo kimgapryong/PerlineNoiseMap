@@ -6,6 +6,7 @@ public class Tile : MonoBehaviour
 {
     public bool dieTile;
     public bool atkCool = false;
+    private bool check = false;
 
     private string tileName;
     public Define.TileType tileType;
@@ -16,14 +17,27 @@ public class Tile : MonoBehaviour
     private string path;
 
     private MeshRenderer meshRenderer;
+
+    private void Start()
+    {
+        Init();
+    }
+    public virtual bool Init()
+    {
+        if (!check)
+        {
+            check = true;
+            return true;
+        }
+
+        return false;
+    }
     public Tile GetSetTile(string name, Define.TileType type,  float hp)
     {
         tileName = name;
         tileType = type;
         this.hp = hp;
         curHp = hp;
-
-
 
         meshRenderer = GetComponent<MeshRenderer>();
 

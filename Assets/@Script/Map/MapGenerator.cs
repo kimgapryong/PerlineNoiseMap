@@ -86,6 +86,7 @@ public class MapGenerator : MonoBehaviour
                         continue;
                     if (curVec.x < 0 || curVec.z < 0 || curVec.x >= maxWidth || curVec.z >= maxHeight)
                         continue;
+
                     if (_tileDic[curVec].tileType != Define.TileType.Rock)
                         continue;
 
@@ -127,6 +128,7 @@ public class MapGenerator : MonoBehaviour
 
                 if (treePos.x < 0 || treePos.z < 0 || treePos.x >= maxWidth || treePos.z >= maxHeight)
                     continue;
+
                 if (!_tileDic.ContainsKey(treePos))
                     treePos = CheckIslandDown(treePos);
 
@@ -227,3 +229,4 @@ public struct MapStruct
     public Color color;
     public GameObject obj;
 }
+
